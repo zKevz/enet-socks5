@@ -999,9 +999,9 @@ static int
 enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
 {
     enet_uint8 usingNewPacket = host -> usingNewPacket && host -> address.port != 0;
-    size_t protocolHeaderSize = usingNewPacket ? sizeof(ENetProtocolHeaderUbisoft) : sizeof(ENetProtocolHeader);
+    size_t protocolHeaderSize = usingNewPacket ? sizeof (ENetProtocolHeaderUbisoft) : sizeof (ENetProtocolHeader);
 
-    ENetProtocolHeader * header;
+    ENetProtocolHeader * header = NULL;
     ENetProtocolHeaderUbisoft * ubisoftHeader = NULL;
     ENetProtocol * command;
     ENetPeer * peer;
@@ -1014,20 +1014,15 @@ enet_protocol_handle_incoming_commands (ENetHost * host, ENetEvent * event)
     {
       if (host -> receivedDataLength < (size_t) & ((ENetProtocolHeader *) 0) -> sentTime)
         return 0;
-    }
-    else
-    {
-      if (host -> receivedDataLength < (size_t) & ((ENetProtocolHeaderUbisoft *) 0) -> sentTime)
-        return 0;
-    }
 
-    if (usingNewPacket)
-    {
       ubisoftHeader = (ENetProtocolHeaderUbisoft *) host -> receivedData;
       peerID = ENET_NET_TO_HOST_16 (ubisoftHeader -> peerID);
     }
     else
     {
+      if (host -> receivedDataLength < (size_t) & ((ENetProtocolHeaderUbisoft *) 0) -> sentTime)
+        return 0;
+      
       header = (ENetProtocolHeader *) host -> receivedData;
       peerID = ENET_NET_TO_HOST_16 (header -> peerID);
     }
@@ -1286,7 +1281,7 @@ enet_protocol_receive_incoming_commands (ENetHost * host, ENetEvent * event)
        {
           ENetSocks5UDP * replyHeader = (ENetSocks5UDP *) host -> packetData[0];
 
-          if (replyHeader -> address_type != ENET_SOCKS5_ADDRESS_IPV4)
+          if (replyHeader -> addressType != ENET_SOCKS5_ADDRESS_IPV4)
             return -1;
 
           host -> receivedData = host -> packetData[0] + sizeof (ENetSocks5UDP);
@@ -1786,9 +1781,9 @@ enet_protocol_send_outgoing_commands (ENetHost * host, ENetEvent * event, int ch
             ENetSocks5UDP * request = (ENetSocks5UDP *) host -> buffers -> data;
             request -> reserved = 0;
             request -> fragment = 0;
-            request -> address_type = ENET_SOCKS5_ADDRESS_IPV4;
-            request -> address_host = host -> socks5TargetAddress.host;
-            request -> address_port = ENET_HOST_TO_NET_16 (host -> socks5TargetAddress.port);
+            request -> addressType = ENET_SOCKS5_ADDRESS_IPV4;
+            request -> addressHost = host -> socks5TargetAddress.host;
+            request -> addressPort = ENET_HOST_TO_NET_16 (host -> socks5TargetAddress.port);
 
             host -> buffers -> dataLength += sizeof (ENetSocks5UDP);
         }

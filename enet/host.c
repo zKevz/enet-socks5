@@ -144,7 +144,7 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
     host -> socks5Config = * socks5Config;
 
     if (enet_socket_connect (host -> socks5Socket, address) != 0)
-        return -1;
+      return -1;
 
     ENetBuffer buffer;
     ENetSocks5MethodRequest method;
@@ -152,16 +152,16 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
     method.methodCount = 1;
 
     if (strlen (socks5Config -> username) == 0 && strlen (socks5Config -> password) == 0)
-        method.methods [0] = ENET_SOCKS5_METHOD_NOAUTH;
+      method.methods [0] = ENET_SOCKS5_METHOD_NOAUTH;
     else
-        method.methods [0] = ENET_SOCKS5_METHOD_USERPASS;
+      method.methods [0] = ENET_SOCKS5_METHOD_USERPASS;
 
     buffer.data = & method;
     buffer.dataLength = sizeof (enet_uint8) + sizeof (enet_uint8) + sizeof (enet_uint8);
 
     int sentLength = enet_socket_send (host -> socks5Socket, address, & buffer, 1);
     if (sentLength <= 0)
-        return -1;
+      return -1;
 
     ENetSocks5MethodResponse methodResponse;
     memset (&methodResponse, 0, sizeof (ENetSocks5MethodResponse));
@@ -171,15 +171,15 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
 
     int receivedLength = enet_socket_receive (host -> socks5Socket, address, & buffer, 1);
     if (receivedLength <= 0)
-        return -1;
+      return -1;
 
     if (methodResponse.version != ENET_SOCKS5_VERSION)
-        return -1;
+      return -1;
 
     switch (methodResponse.method) 
     {
         case ENET_SOCKS5_METHOD_NOAUTH:
-            break;
+          break;
 
         case ENET_SOCKS5_METHOD_USERPASS:
         {
@@ -205,7 +205,7 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
 
             sentLength = enet_socket_send (host -> socks5Socket, address, & buffer, 1);
             if (sentLength <= 0)
-                return -1;
+              return -1;
 
             ENetSocks5AuthResponse authResponse;
             buffer.data = & authResponse;
@@ -213,48 +213,48 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
 
             receivedLength = enet_socket_receive (host -> socks5Socket, address, & buffer, 1);
             if (receivedLength <= 0)
-                return -1;
+              return -1;
 
             if (authResponse.version != ENET_SOCKS5_AUTH_VERSION)
-                return -1;
+              return -1;
 
             if (authResponse.status != ENET_SOCKS5_AUTH_SUCCESS)
-                return -1;
+              return -1;
 
             break;
         }
 
         default:
-            return -1;
+          return -1;
     }
 
     ENetSocks5Connection connection;
     connection.version = ENET_SOCKS5_VERSION;
     connection.command = ENET_SOCKS5_COMMAND_UDP_ASSOCIATE;
     connection.reserved = 0;
-    connection.address_type = ENET_SOCKS5_ADDRESS_IPV4;
-    connection.address_host = 0;
-    connection.address_port = 0;
+    connection.addressType = ENET_SOCKS5_ADDRESS_IPV4;
+    connection.addressHost = 0;
+    connection.addressPort = 0;
 
     buffer.data = & connection;
     buffer.dataLength = sizeof (ENetSocks5Connection);
 
     sentLength = enet_socket_send (host -> socks5Socket, address, & buffer, 1);
     if (sentLength <= 0)
-        return -1;
+      return -1;
 
     receivedLength = enet_socket_receive (host -> socks5Socket, address, & buffer, 1);
     if (receivedLength <= 0)
-        return -1;
+      return -1;
 
     if (connection.version != ENET_SOCKS5_VERSION)
-        return -1;
+      return -1;
 
     if (connection.status != ENET_SOCKS5_REPLY_SUCCEED)
-        return -1;
+      return -1;
 
-    if (connection.address_type != ENET_SOCKS5_ADDRESS_IPV4)
-        return -1;
+    if (connection.addressType != ENET_SOCKS5_ADDRESS_IPV4)
+      return -1;
 
     return 0;
 }

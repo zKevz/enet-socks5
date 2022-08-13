@@ -235,7 +235,7 @@ typedef enum _ENetSocks5ReplyStatus
    ENET_SOCKS5_REPLY_CONNECTION_REFUSED,
    ENET_SOCKS5_REPLY_TTL_EXPIRED,
    ENET_SOCKS5_REPLY_COMMAND_NOT_SUPPORTED,
-   ENET_SOCKS5_REPLY_ADDRESS_TYPE_NOT_SUPPORTED,
+   ENET_SOCKS5_REPLY_addressType_NOT_SUPPORTED,
 } ENetSocks5ReplyStatus;
 
 typedef struct _ENetSocks5MethodRequest
@@ -265,18 +265,18 @@ typedef struct _ENetSocks5Connection
       enet_uint8 status;
    };
    enet_uint8 reserved;
-   enet_uint8 address_type;
-   enet_uint32 address_host; // since we will use ipv4 anyways
-   enet_uint16 address_port;
+   enet_uint8 addressType;
+   enet_uint32 addressHost; // since we will use ipv4 anyways
+   enet_uint16 addressPort;
 } ENET_PACKED ENetSocks5Connection;
 
 typedef struct _ENetSocks5UDP
 {
    enet_uint16 reserved;
    enet_uint8 fragment;
-   enet_uint8 address_type;
-   enet_uint32 address_host; // since we will use ipv4 anyways
-   enet_uint16 address_port;
+   enet_uint8 addressType;
+   enet_uint32 addressHost; // since we will use ipv4 anyways
+   enet_uint16 addressPort;
 } ENET_PACKED ENetSocks5UDP;
 
 #ifdef _MSC_VER
