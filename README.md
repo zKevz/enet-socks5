@@ -6,7 +6,7 @@ Not only [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928), we also add a support
 
 # Changes
 - [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) Implementation
-- Growtopia's Ubisoft Protocol that is compatible to SOCKS5 protocol aswell
+- Growtopia's Ubisoft Protocol that is compatible to [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) protocol aswell
 
 # Usage
 To enable [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) protocol, you will need to write some code just below enet_host_create
