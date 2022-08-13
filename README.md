@@ -1,9 +1,7 @@
 # Note
 
 This is a fork and a modified version of [enet](https://github.com/lsalzman/enet).
-
 Because the original [enet](https://github.com/lsalzman/enet) library doesn't support [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) protocol, we decided to add a support of it.
-
 Not only [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928), we also add a support for Growtopia's Ubisoft Protocol, for both client/server.
 
 # Changes
