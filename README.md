@@ -2,16 +2,16 @@
 
 This is a fork and a modified version of [enet](https://github.com/lsalzman/enet).
 
-Because the original [enet](https://github.com/lsalzman/enet) library doesn't support SOCKS5 protocol, we decided to add a support of it.
+Because the original [enet](https://github.com/lsalzman/enet) library doesn't support [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) protocol, we decided to add a support of it.
 
-Not only SOCKS5, we also add a support for Growtopia's Ubisoft Protocol, for both client/server.
+Not only [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928), we also add a support for Growtopia's Ubisoft Protocol, for both client/server.
 
 # Changes
-- SOCKS5 Implementation
+- [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) Implementation
 - Growtopia's Ubisoft Protocol that is compatible to SOCKS5 protocol aswell
 
 # Usage
-To enable SOCKS5 protocol, you will need to write some code just below enet_host_create
+To enable [SOCKS5](https://www.rfc-editor.org/rfc/rfc1928) protocol, you will need to write some code just below enet_host_create
 ```c
 ENetSocks5Config config;
 config.address.port = 1080; // The SOCKS5 proxy port
