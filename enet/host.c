@@ -188,7 +188,7 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
           
             size_t offset = 0;
             size_t authRequestSize = sizeof (enet_uint8) + sizeof (enet_uint8) + usernameLength + sizeof (enet_uint8) + passwordLength;
-            enet_uint8 authRequest [authRequestSize];
+            enet_uint8* authRequest = enet_malloc (authRequestSize);
             
             authRequest [offset ++] = ENET_SOCKS5_AUTH_VERSION;
 
@@ -204,6 +204,7 @@ enet_host_use_socks5 (ENetHost * host, ENetSocks5Config * socks5Config)
             buffer.dataLength = authRequestSize;
 
             sentLength = enet_socket_send (host -> socks5Socket, address, & buffer, 1);
+            enet_free (authRequest);
             if (sentLength <= 0)
               return -1;
 
